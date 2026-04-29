@@ -10,25 +10,29 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    /* Marine palette: deep navy hulls, brass fittings, signal coral, cream sails */
-    --ink:    #0c1a2b;   /* deepest navy — base canvas */
-    --deep:   #142a40;   /* surface — top bar, sidebars */
-    --hull:   #1d3850;   /* panel — buttons, items */
-    --hull-2: #25455f;   /* panel hover */
-    --rope:   #2f5374;   /* borders */
-    --rope-2: #3d6486;   /* border hover */
-    --sky:    #6ea8d4;   /* primary accent — selection blue */
-    --sky-2:  #4a89bd;   /* primary deeper */
+    /* Light daylight palette: pale blue/white panels, gold borders, deep
+       navy text. Tuned to sit comfortably in front of the bright spring sky. */
+    --ink:    #f1f7fc;   /* lightest panel — base canvas / page bg */
+    --deep:   #e6f0f8;   /* top bar, sidebars — slightly cooler white */
+    --hull:   #d9e8f3;   /* panel — buttons, items */
+    --hull-2: #cae0f0;   /* panel hover */
+    --rope:   #d4a93a;   /* borders — warm gold */
+    --rope-2: #b8902a;   /* border hover — deeper gold */
+    --sky:    #3a7eb0;   /* primary accent — selection blue */
+    --sky-2:  #2a6a9a;   /* primary deeper */
     --brass:  #d4a93a;   /* warm yellow accent — highlights, gizmo y */
     --brass-2:#b8902a;
-    --coral:  #d96a55;   /* signal red — danger, delete, holes */
-    --coral-2:#b85544;
-    --seafoam:#6fb39d;   /* soft teal — success, active states */
-    --sail:   #ecdcb8;   /* parchment cream — primary text */
-    --sail-2: #d6c499;   /* slightly dimmer cream */
-    --mist:   #8ea3b8;   /* muted blue-gray text */
+    --coral:  #c05540;   /* signal red — danger, delete, holes */
+    --coral-2:#a04030;
+    --seafoam:#4a9580;   /* soft teal — success, active states */
+    --sail:   #1f3850;   /* deep navy ink — primary TEXT on light bg */
+    --sail-2: #3a5570;   /* slightly dimmer text */
+    --mist:   #6b85a0;   /* muted slate-blue text */
 
-    /* Aliases kept for older selectors that still use these names */
+    /* Text color for buttons/badges sitting on a brass/gold fill */
+    --on-brass: #1f1408;
+
+    /* Aliases kept for older selectors */
     --bg: var(--ink);
     --surface: var(--deep);
     --panel: var(--hull);
@@ -49,8 +53,8 @@
   body {
     font-family: var(--font);
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(110,168,212,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 100%, rgba(212,169,58,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(212,169,58,0.10) 0%, transparent 50%),
       var(--ink);
     color: var(--sail);
     height: 100vh;
@@ -63,7 +67,7 @@
   /* ── Top Bar ── */
   #topbar {
     height: 56px;
-    background: linear-gradient(180deg, var(--deep) 0%, rgba(20,42,64,0.92) 100%);
+    background: linear-gradient(180deg, var(--deep) 0%, rgba(230,240,248,0.95) 100%);
     border-bottom: 1px solid var(--rope);
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -107,7 +111,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 4px 14px rgba(110,168,212,0.25));
+    filter: drop-shadow(0 4px 14px rgba(31,56,80,0.18));
   }
 
   #cloud-logo-text {
@@ -116,7 +120,7 @@
     font-weight: 600;
     font-size: 22px;
     letter-spacing: -0.5px;
-    color: var(--ink);
+    color: var(--on-brass);
     z-index: 2;
     margin-top: -4px; /* visual centering inside the cloud */
   }
@@ -148,8 +152,8 @@
   .top-btn:hover { background: var(--hull); border-color: var(--rope-2); color: var(--sail); }
   .top-btn.danger { color: var(--coral); border-color: rgba(217,106,85,0.4); }
   .top-btn.danger:hover { background: rgba(217,106,85,0.12); border-color: var(--coral); }
-  .top-btn.accent { background: var(--brass); border-color: var(--brass-2); color: var(--ink); font-weight: 600; }
-  .top-btn.accent:hover { background: var(--brass-2); border-color: var(--brass-2); color: var(--ink); }
+  .top-btn.accent { background: var(--brass); border-color: var(--brass-2); color: var(--on-brass); font-weight: 600; }
+  .top-btn.accent:hover { background: var(--brass-2); border-color: var(--brass-2); color: var(--on-brass); }
 
   #mode-label {
     font-family: var(--mono);
@@ -243,7 +247,7 @@
   }
 
   .tool-btn:hover { background: var(--hull-2); border-color: var(--rope-2); }
-  .tool-btn.active { border-color: var(--sky); color: var(--sky); background: rgba(110,168,212,0.12); }
+  .tool-btn.active { border-color: var(--sky); color: var(--sky-2); background: rgba(58,126,176,0.14); }
 
   /* ── Viewport ── */
   #viewport {
@@ -279,23 +283,24 @@
     color: var(--sail-2);
     line-height: 1.55;
     letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    /* White halo so the dark text stays legible against any cloud or sky tone */
+    text-shadow: 0 0 4px rgba(255,255,255,0.85), 0 1px 2px rgba(255,255,255,0.7);
   }
   #vp-readout .label { color: var(--mist); margin-right: 4px; }
   #vp-readout .row { display: block; }
   #vp-readout .num { color: var(--sail); }
-  #vp-readout .ax-x { color: #e88a78; }   /* coral-ish for X */
-  #vp-readout .ax-y { color: var(--brass); } /* brass for Y */
-  #vp-readout .ax-z { color: var(--sky); }   /* sky for Z */
+  #vp-readout .ax-x { color: var(--coral-2); }
+  #vp-readout .ax-y { color: var(--brass-2); }
+  #vp-readout .ax-z { color: var(--sky-2); }
 
   .vp-badge {
-    background: rgba(20,42,64,0.8);
+    background: rgba(255,255,255,0.85);
     border: 1px solid var(--rope);
     border-radius: 4px;
     padding: 4px 8px;
     font-size: 11px;
     font-family: var(--mono);
-    color: var(--mist);
+    color: var(--sail-2);
     letter-spacing: 0.4px;
   }
 
@@ -461,7 +466,7 @@
   }
 
   .obj-item:hover { background: var(--hull); }
-  .obj-item.selected { background: rgba(110,168,212,0.14); border-color: rgba(110,168,212,0.4); color: var(--sky); }
+  .obj-item.selected { background: rgba(58,126,176,0.18); border-color: rgba(58,126,176,0.5); color: var(--sky-2); }
 
   .obj-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
@@ -516,7 +521,7 @@
     bottom: 50px;
     right: 24px;
     background: var(--brass);
-    color: var(--ink);
+    color: var(--on-brass);
     font-size: 13px;
     font-weight: 500;
     padding: 10px 16px;
@@ -552,7 +557,7 @@
     grid-template-rows: 32px 32px 32px;
     gap: 3px;
     padding: 6px;
-    background: rgba(20,42,64,0.82);
+    background: rgba(255,255,255,0.85);
     border: 1px solid var(--rope);
     border-radius: 6px;
     backdrop-filter: blur(6px);
@@ -573,7 +578,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-  .vc-btn:hover { background: rgba(110,168,212,0.18); border-color: var(--sky); color: var(--sky); }
+  .vc-btn:hover { background: rgba(58,126,176,0.18); border-color: var(--sky); color: var(--sky-2); }
   .vc-btn.home { background: rgba(212,169,58,0.14); border-color: rgba(212,169,58,0.45); color: var(--brass); }
   .vc-empty { visibility: hidden; }
 
@@ -645,13 +650,13 @@
   /* ── Ruler readout ── */
   #ruler-readout {
     position: absolute;
-    background: rgba(20,42,64,0.95);
+    background: rgba(255,255,255,0.95);
     border: 1px solid var(--brass);
     border-radius: 4px;
     padding: 4px 8px;
     font-family: var(--mono);
     font-size: 11px;
-    color: var(--brass);
+    color: var(--brass-2);
     pointer-events: none;
     transform: translate(-50%, -100%);
     margin-top: -8px;
@@ -742,9 +747,9 @@
   /* ── Dimension labels (HTML overlays for the 3D bbox frame) ── */
   .dim-label {
     position: absolute;
-    background: rgba(12,26,43,0.92);
+    background: rgba(255,255,255,0.94);
     border: 1px solid var(--sky);
-    color: var(--sky);
+    color: var(--sky-2);
     border-radius: 3px;
     padding: 2px 7px;
     font-family: var(--mono);
@@ -755,14 +760,14 @@
     white-space: nowrap;
     z-index: 4;
     letter-spacing: 0.3px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 8px rgba(31,56,80,0.18);
   }
-  .dim-label.x { border-color: var(--coral); color: var(--coral); }
+  .dim-label.x { border-color: var(--coral); color: var(--coral-2); }
   .dim-label.y { border-color: var(--seafoam); color: var(--seafoam); }
-  .dim-label.z { border-color: var(--sky); color: var(--sky); }
+  .dim-label.z { border-color: var(--sky); color: var(--sky-2); }
   .dim-label.scaling {
     background: var(--brass);
-    color: var(--ink);
+    color: var(--on-brass);
     border-color: var(--brass);
     font-weight: 600;
     transform: translate(-50%, -50%) scale(1.1);
@@ -771,19 +776,19 @@
   /* ── Rotation angle readout (during rotation drag) ── */
   #angle-readout {
     position: absolute;
-    background: rgba(12,26,43,0.96);
+    background: rgba(255,255,255,0.96);
     border: 2px solid var(--brass);
     border-radius: 6px;
     padding: 8px 14px;
     font-family: var(--mono);
     font-size: 16px;
     font-weight: 600;
-    color: var(--brass);
+    color: var(--brass-2);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 7;
     display: none;
-    box-shadow: 0 4px 20px rgba(212,169,58,0.3);
+    box-shadow: 0 4px 20px rgba(212,169,58,0.4);
     letter-spacing: 0.5px;
   }
   #angle-readout::before {
@@ -1355,7 +1360,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setClearColor(0x0c1a2b);
+renderer.setClearColor(0xdbeaf3);
 viewport.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
@@ -1387,15 +1392,16 @@ const skyGroup = new THREE.Group();
 scene.add(skyGroup);
 
 // ── 1. Skybox (gradient sphere) ──
-// Custom shader: smoothly interpolates between three colors based on world Y.
-// Zenith (deep blue) → horizon (warm peach/cream) → nadir (deep indigo).
+// Bright spring-day palette: clean cerulean blue at the zenith, soft pale
+// powder-blue at the horizon, gentle muted blue below. Three colors but the
+// total range stays within the daylight spectrum — no dusk/sunset tones.
 const skyShader = {
   uniforms: {
-    zenithColor:  { value: new THREE.Color('#1a3a6b') }, // deep cobalt blue at top
-    horizonColor: { value: new THREE.Color('#f4c89a') }, // warm peach at horizon
-    nadirColor:   { value: new THREE.Color('#2c1f4a') }, // deep indigo below
-    horizonY:     { value: 0.0 },                         // where the horizon sits
-    fadeWidth:    { value: 0.6 },                         // softness of the band
+    zenithColor:  { value: new THREE.Color('#4a8fc7') }, // clean spring cerulean overhead
+    horizonColor: { value: new THREE.Color('#dbeaf3') }, // pale washed blue at the horizon
+    nadirColor:   { value: new THREE.Color('#7fb0d8') }, // muted sky-blue beneath
+    horizonY:     { value: 0.0 },
+    fadeWidth:    { value: 0.7 },
   },
   vertexShader: `
     varying vec3 vWorldPosition;
@@ -1413,15 +1419,12 @@ const skyShader = {
     uniform float fadeWidth;
     varying vec3 vWorldPosition;
     void main() {
-      // Direction to this fragment from origin (0..150 sphere)
-      float h = normalize(vWorldPosition).y; // -1 (down) .. 1 (up)
+      float h = normalize(vWorldPosition).y;
       vec3 col;
       if (h > horizonY) {
-        // Above horizon: blend horizon → zenith
         float t = smoothstep(horizonY, horizonY + fadeWidth, h);
         col = mix(horizonColor, zenithColor, t);
       } else {
-        // Below horizon: blend horizon → nadir
         float t = smoothstep(horizonY, horizonY - fadeWidth, h);
         col = mix(horizonColor, nadirColor, t);
       }
@@ -1442,9 +1445,9 @@ const skybox = new THREE.Mesh(skyboxGeo, skyboxMat);
 skybox.renderOrder = -1000;
 skyGroup.add(skybox);
 
-// ── 2. Sun (high in the sky) ──
-// Build a soft radial-glow texture on a 2D canvas, used both for the sun's
-// halo sprite and for the cloud sprites later.
+// ── 2. Sun — soft, atmospheric, off to one side ──
+// Daylight sun: warm white core with a subtle halo, NOT a dominant disc.
+// Positioned high so it lights the workplane from above-right.
 function makeRadialTexture(size, innerColor, outerColor, falloff = 2.0) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
@@ -1456,7 +1459,6 @@ function makeRadialTexture(size, innerColor, outerColor, falloff = 2.0) {
   grad.addColorStop(1, outerColor.replace('1.0)', '0)').replace(',1)', ',0)'));
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, size, size);
-  // Apply optional falloff sharpening
   if (falloff !== 1.0) {
     const img = ctx.getImageData(0, 0, size, size);
     for (let i = 3; i < img.data.length; i += 4) {
@@ -1470,22 +1472,20 @@ function makeRadialTexture(size, innerColor, outerColor, falloff = 2.0) {
   return tex;
 }
 
-// Sun core: bright yellow-white sphere
 const sunCore = new THREE.Mesh(
-  new THREE.SphereGeometry(2.4, 32, 32),
-  new THREE.MeshBasicMaterial({ color: 0xfff2c0, depthWrite: false })
+  new THREE.SphereGeometry(1.6, 32, 32),
+  new THREE.MeshBasicMaterial({ color: 0xfff8e6, depthWrite: false })
 );
-const sunGlowTex = makeRadialTexture(256, 'rgba(255,236,160,1.0)', 'rgba(255,180,90,1.0)', 2.2);
+const sunGlowTex = makeRadialTexture(256, 'rgba(255,250,225,1.0)', 'rgba(255,235,200,1.0)', 2.6);
 const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-  map: sunGlowTex, color: 0xffffff, transparent: true, opacity: 0.95,
+  map: sunGlowTex, color: 0xffffff, transparent: true, opacity: 0.75,
   depthWrite: false, blending: THREE.AdditiveBlending,
 }));
-sunGlow.scale.set(14, 14, 1);
-// Sun position: high in the sky (azimuth ~35°, elevation ~62°)
+sunGlow.scale.set(11, 11, 1);
 const sunDir = new THREE.Vector3(
-  Math.sin(THREE.MathUtils.degToRad(35)) * Math.cos(THREE.MathUtils.degToRad(62)),
-  Math.sin(THREE.MathUtils.degToRad(62)),
-  Math.cos(THREE.MathUtils.degToRad(35)) * Math.cos(THREE.MathUtils.degToRad(62))
+  Math.sin(THREE.MathUtils.degToRad(40)) * Math.cos(THREE.MathUtils.degToRad(58)),
+  Math.sin(THREE.MathUtils.degToRad(58)),
+  Math.cos(THREE.MathUtils.degToRad(40)) * Math.cos(THREE.MathUtils.degToRad(58))
 ).normalize();
 const sunDistance = 120;
 const sunPos = sunDir.clone().multiplyScalar(sunDistance);
@@ -1495,118 +1495,114 @@ sunCore.renderOrder = -990;
 sunGlow.renderOrder = -991;
 skyGroup.add(sunGlow);
 skyGroup.add(sunCore);
-// Tilt our key directional light to MATCH the sun direction so shadows look right
+// Align the directional shadow light with the sun
 dirLight.position.copy(sunDir.clone().multiplyScalar(20));
+// Tweak lighting for daylight feel
+ambient.intensity = 0.55;
+dirLight.intensity = 0.95;
+dirLight.color.set(0xfff4dc); // warm but not orange
+fillLight.color.set(0xb8d4ec); // cool blue bounce
+fillLight.intensity = 0.4;
 
-// ── 3. Moon (lower, opposite side) ──
-// Procedural cratered texture: layer of subtle gray noise + faint craters.
-function makeMoonTexture() {
-  const size = 256;
-  const c = document.createElement('canvas');
-  c.width = c.height = size;
-  const ctx = c.getContext('2d');
-  // Base
-  ctx.fillStyle = '#dfd9c8';
-  ctx.fillRect(0, 0, size, size);
-  // Subtle grain
-  const img = ctx.getImageData(0, 0, size, size);
-  for (let i = 0; i < img.data.length; i += 4) {
-    const n = (Math.random() - 0.5) * 22;
-    img.data[i]   = Math.max(0, Math.min(255, img.data[i] + n));
-    img.data[i+1] = Math.max(0, Math.min(255, img.data[i+1] + n));
-    img.data[i+2] = Math.max(0, Math.min(255, img.data[i+2] + n));
-  }
-  ctx.putImageData(img, 0, 0);
-  // Craters: dark soft circles
-  for (let i = 0; i < 32; i++) {
-    const cx = Math.random() * size;
-    const cy = Math.random() * size;
-    const r  = 4 + Math.random() * 16;
-    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-    grad.addColorStop(0, 'rgba(120,110,100,0.35)');
-    grad.addColorStop(0.7, 'rgba(160,150,138,0.18)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  // Slight bluish terminator on one side for dimension
-  const sideShade = ctx.createLinearGradient(0, 0, size, 0);
-  sideShade.addColorStop(0, 'rgba(60,80,110,0.28)');
-  sideShade.addColorStop(0.5, 'rgba(0,0,0,0)');
-  sideShade.addColorStop(1, 'rgba(40,30,70,0.18)');
-  ctx.fillStyle = sideShade;
-  ctx.fillRect(0, 0, size, size);
-  const tex = new THREE.CanvasTexture(c);
-  tex.needsUpdate = true;
-  return tex;
-}
-
-const moonCore = new THREE.Mesh(
-  new THREE.SphereGeometry(1.8, 32, 32),
-  new THREE.MeshBasicMaterial({ map: makeMoonTexture(), depthWrite: false })
-);
-const moonGlowTex = makeRadialTexture(256, 'rgba(220,225,240,1.0)', 'rgba(160,170,200,1.0)', 2.5);
-const moonGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-  map: moonGlowTex, color: 0xffffff, transparent: true, opacity: 0.55,
-  depthWrite: false, blending: THREE.AdditiveBlending,
-}));
-moonGlow.scale.set(8, 8, 1);
-// Moon position: low in the opposite sky (the user sees it when orbiting low)
-const moonDir = new THREE.Vector3(
-  Math.sin(THREE.MathUtils.degToRad(215)) * Math.cos(THREE.MathUtils.degToRad(-15)),
-  Math.sin(THREE.MathUtils.degToRad(-15)),
-  Math.cos(THREE.MathUtils.degToRad(215)) * Math.cos(THREE.MathUtils.degToRad(-15))
-).normalize();
-const moonPos = moonDir.clone().multiplyScalar(115);
-moonCore.position.copy(moonPos);
-moonGlow.position.copy(moonPos);
-moonCore.renderOrder = -990;
-moonGlow.renderOrder = -991;
-skyGroup.add(moonGlow);
-skyGroup.add(moonCore);
-
-// ── 4. Clouds (procedural sprites scattered around the sky) ──
-// Each cloud is a single sprite using a generated soft alpha texture made of
-// many overlapping translucent circles — gives a natural fluffy look.
+// ── 3. Clouds — dense, fluffy, peaceful spring-day cumulus ──
+// Each cloud sprite is built from many overlapping radial blobs to give a
+// thick fluffy silhouette with bright tops and soft blue-shadowed undersides
+// — the look of cumulus on a calm afternoon.
 function makeCloudTexture() {
   const size = 256;
   const c = document.createElement('canvas');
   c.width = c.height = size;
   const ctx = c.getContext('2d');
   ctx.clearRect(0, 0, size, size);
-  // Build a cluster of soft white blobs forming a cloud silhouette
-  const blobs = 14 + Math.floor(Math.random() * 8);
-  for (let i = 0; i < blobs; i++) {
-    // Cluster around the center, with horizontal spread
+
+  // Pass 1: soft cool-blue under-shadow to give the cloud volume.
+  // Concentrate it in the lower half of the canvas (cloud bottom).
+  const shadowBlobs = 10 + Math.floor(Math.random() * 6);
+  for (let i = 0; i < shadowBlobs; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const dist = Math.random() * 60;
-    const cx = size / 2 + Math.cos(angle) * dist * (0.9 + Math.random() * 0.7);
-    const cy = size / 2 + Math.sin(angle) * dist * 0.45;
-    const r = 24 + Math.random() * 38;
-    const alpha = 0.08 + Math.random() * 0.15;
+    const dist = Math.random() * 70;
+    const cx = size / 2 + Math.cos(angle) * dist * (0.95 + Math.random() * 0.6);
+    // Push shadow blobs downward in the canvas
+    const cy = size / 2 + 14 + Math.abs(Math.sin(angle)) * dist * 0.45;
+    const r = 30 + Math.random() * 40;
     const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-    grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
-    grad.addColorStop(0.6, `rgba(255,255,255,${alpha * 0.5})`);
-    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    grad.addColorStop(0,    'rgba(155,180,210,0.32)');
+    grad.addColorStop(0.55, 'rgba(170,195,220,0.18)');
+    grad.addColorStop(1,    'rgba(180,200,225,0)');
     ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fill();
   }
+
+  // Pass 2: bright white body — many overlapping high-opacity blobs.
+  // This is what gives the dense, "you could touch it" feeling.
+  const blobs = 26 + Math.floor(Math.random() * 12);
+  for (let i = 0; i < blobs; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.random() * 70;
+    const cx = size / 2 + Math.cos(angle) * dist * (0.95 + Math.random() * 0.6);
+    // Bias body upward (cloud tops are bright)
+    const cy = size / 2 + Math.sin(angle) * dist * 0.45 - 6;
+    const r = 26 + Math.random() * 44;
+    // Higher alpha than before for solid feel
+    const alpha = 0.45 + Math.random() * 0.40;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    grad.addColorStop(0,    `rgba(255,255,255,${alpha})`);
+    grad.addColorStop(0.55, `rgba(252,253,255,${alpha * 0.55})`);
+    grad.addColorStop(1,    'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Pass 3: a few sun-lit highlight spots near the top-right of the cloud
+  // (where the sun would catch them). Adds the gentle glow seen in the ref.
+  const highlights = 3 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < highlights; i++) {
+    const cx = size / 2 + 10 + Math.random() * 50;
+    const cy = size / 2 - 30 - Math.random() * 30;
+    const r = 18 + Math.random() * 22;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    grad.addColorStop(0,    'rgba(255,253,240,0.65)');
+    grad.addColorStop(0.6,  'rgba(255,253,240,0.25)');
+    grad.addColorStop(1,    'rgba(255,253,240,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   const tex = new THREE.CanvasTexture(c);
   tex.needsUpdate = true;
   return tex;
 }
 
-// Place ~14 clouds at random azimuths + low/mid elevations
-const cloudCount = 14;
-for (let i = 0; i < cloudCount; i++) {
-  const azimuth = (i / cloudCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
-  // Elevation: mostly between -5° and 30° (horizon band where clouds sit best)
-  const elev = THREE.MathUtils.degToRad(-5 + Math.random() * 35);
-  const r = 100 + Math.random() * 25;
+// Build a thick blanket of clouds: TWO bands of lots of clouds each.
+// The lower band (-3° to 12°) gives the dense horizon wall.
+// The upper band (15° to 35°) breaks up the sky above it.
+const cloudPositions = [];
+const clouds = [];
+
+// Lower (horizon) band — densely packed
+const lowerBandCount = 26;
+for (let i = 0; i < lowerBandCount; i++) {
+  const azimuth = (i / lowerBandCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+  const elev = THREE.MathUtils.degToRad(-3 + Math.random() * 15);
+  cloudPositions.push({ azimuth, elev, sizeBoost: 1.0 });
+}
+
+// Upper band — fewer, larger
+const upperBandCount = 12;
+for (let i = 0; i < upperBandCount; i++) {
+  const azimuth = (i / upperBandCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
+  const elev = THREE.MathUtils.degToRad(15 + Math.random() * 22);
+  cloudPositions.push({ azimuth, elev, sizeBoost: 1.15 });
+}
+
+cloudPositions.forEach(({ azimuth, elev, sizeBoost }) => {
+  const r = 95 + Math.random() * 25;
   const dir = new THREE.Vector3(
     Math.sin(azimuth) * Math.cos(elev),
     Math.sin(elev),
@@ -1616,26 +1612,31 @@ for (let i = 0; i < cloudCount; i++) {
     map: makeCloudTexture(),
     color: 0xffffff,
     transparent: true,
-    opacity: 0.85,
+    opacity: 0.96,           // close to fully opaque — solid clouds
     depthWrite: false,
   });
   const cloud = new THREE.Sprite(cloudMat);
-  // Tint: catch a little of the warm horizon light
-  const tint = 0.85 + Math.random() * 0.15;
-  cloud.material.color.setRGB(tint, tint * 0.96, tint * 0.92);
-  // Random size variation
-  const sx = 24 + Math.random() * 18;
-  const sy = sx * (0.42 + Math.random() * 0.18);
+  // Slight cool tint for clouds further from the sun, slight warm tint for ones near it
+  const dotSun = dir.dot(sunDir);
+  const warm = Math.max(0, dotSun);
+  cloud.material.color.setRGB(
+    1.0,
+    1.0 - 0.02 * (1 - warm),
+    1.0 - 0.04 * (1 - warm)
+  );
+  // Bigger fluffier scale
+  const sx = (32 + Math.random() * 24) * sizeBoost;
+  const sy = sx * (0.50 + Math.random() * 0.18);
   cloud.scale.set(sx, sy, 1);
   cloud.position.copy(dir.multiplyScalar(r));
   cloud.renderOrder = -995;
-  // Slow drift speed (we'll animate in the render loop)
-  cloud.userData.driftSpeed = 0.00008 + Math.random() * 0.00012;
+  cloud.userData.driftSpeed = 0.00006 + Math.random() * 0.00010;
   cloud.userData.azimuth = azimuth;
   cloud.userData.elevation = elev;
   cloud.userData.radius = r;
   skyGroup.add(cloud);
-}
+  clouds.push(cloud);
+});
 
 // Each frame: re-center skyGroup on the camera so the sky never appears to
 // translate (only rotate as the user orbits). Animate cloud drift.
